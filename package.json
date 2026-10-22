@@ -1,0 +1,108 @@
+{
+  "name": "vite-plugin-loading",
+  "version": "0.0.1",
+  "description": "A Vite plugin that injects a controllable application loading screen.",
+  "keywords": [
+    "app-loading",
+    "loading",
+    "splash-screen",
+    "vite",
+    "vite-plugin"
+  ],
+  "homepage": "https://github.com/yibird/vite-plugin-loading#readme",
+  "bugs": {
+    "url": "https://github.com/yibird/vite-plugin-loading/issues"
+  },
+  "license": "MIT",
+  "author": "zchengfeng <2684837849@qq.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yibird/vite-plugin-loading.git"
+  },
+  "funding": "https://github.com/sponsors/yibird",
+  "files": [
+    "dist",
+    "client.d.ts",
+    "README.md",
+    "README.zh-CN.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "dist/index.mjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    },
+    "./animation": {
+      "types": "./dist/animation.d.mts",
+      "import": "./dist/animation.mjs",
+      "default": "./dist/animation.mjs"
+    },
+    "./client": {
+      "types": "./client.d.ts"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "check": "pnpm format:check && pnpm lint && pnpm test && pnpm build:examples",
+    "commit": "czg",
+    "dev:vue": "pnpm build && pnpm --filter vite-plugin-loading-example-vue dev",
+    "dev:react": "pnpm build && pnpm --filter vite-plugin-loading-example-react dev",
+    "build": "tsc --noEmit && tsdown",
+    "build:examples": "pnpm build && pnpm --filter vite-plugin-loading-example-vue build && pnpm --filter vite-plugin-loading-example-react build",
+    "lint": "vp lint",
+    "lint:fix": "vp lint --fix",
+    "format": "vp fmt --write",
+    "format:check": "vp fmt --check",
+    "test": "vp test",
+    "test:watch": "vp test watch",
+    "test:browser": "playwright test",
+    "pack:check": "pnpm build && npm pack --dry-run",
+    "lint:package": "publint",
+    "release:check": "pnpm check && pnpm test:browser && pnpm pack:check && pnpm lint:package",
+    "release": "pnpm release:check && bumpp",
+    "taze": "taze latest -wIr",
+    "prepare": "simple-git-hooks",
+    "prepublishOnly": "pnpm release:check"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5",
+    "bumpp": "^12.3.0",
+    "cz-git": "^1.14.0",
+    "jsdom": "^30.1.3",
+    "lint-staged": "^17.6.0",
+    "publint": "^0.3.25",
+    "simple-git-hooks": "^2.14.0",
+    "taze": "^21.3.0",
+    "tsdown": "^0.23.1",
+    "typescript": "~7.0.2",
+    "vite": "^8.3.4",
+    "vite-plus": "^1.3.0"
+  },
+  "peerDependencies": {
+    "vite": "^6.0.0 || ^7.0.0 || ^8.0.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged",
+    "preserveUnused": true
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "volta": {
+    "node": "26.12.0"
+  }
+}

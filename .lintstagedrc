@@ -1,0 +1,4 @@
+{
+  "*.{js,ts,mts}": ["vp fmt --write", "vp lint --tsconfig=tsconfig.json"],
+  "*.{json,jsonc,md,css,html,yaml,yml}": "vp fmt --write"
+}

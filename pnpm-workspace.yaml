@@ -1,0 +1,5 @@
+packages:
+  - example/*
+
+onlyBuiltDependencies:
+  - simple-git-hooks
