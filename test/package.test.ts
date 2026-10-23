@@ -13,7 +13,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vite-plus/test'
  */
 
 const repoRoot = path.resolve(import.meta.dirname, '..')
-const packageName = 'vite-plugin-loading'
+const packageName = '@starweave-lab/vite-plugin-loading'
 const scratchDirs: string[] = []
 
 function run(command: string, args: string[], cwd: string): string {
@@ -126,7 +126,7 @@ describe('在全新项目里安装并构建', () => {
     fs.writeFileSync(
       path.join(project, 'main.js'),
       "import { hideAppLoading } from 'virtual:app-loading'\n" +
-        "import { loadingTypes } from 'vite-plugin-loading/animation'\n" +
+        "import { loadingTypes } from '@starweave-lab/vite-plugin-loading/animation'\n" +
         'document.title = `${loadingTypes.length} types`\n' +
         "document.querySelector('#app').textContent = 'ready'\n" +
         'hideAppLoading()\n',
@@ -135,8 +135,8 @@ describe('在全新项目里安装并构建', () => {
     // 所以"构建能过"本身就是这两条入口的解析证明。
     fs.writeFileSync(
       path.join(project, 'vite.config.mjs'),
-      "import { appLoading, loadingTypes } from 'vite-plugin-loading'\n" +
-        "import { isLoadingType } from 'vite-plugin-loading/animation'\n" +
+      "import { appLoading, loadingTypes } from '@starweave-lab/vite-plugin-loading'\n" +
+        "import { isLoadingType } from '@starweave-lab/vite-plugin-loading/animation'\n" +
         'export const entries = [loadingTypes.length, isLoadingType]\n' +
         'export default {\n' +
         // 标题带 `&`：用来验证最终 HTML 里的属性只被转义一次（双重转义会把实体文本念给读屏）。

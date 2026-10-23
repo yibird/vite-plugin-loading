@@ -1,6 +1,6 @@
 # React 示例
 
-`vite-plugin-loading` 的 React 19 示例。
+`@starweave-lab/vite-plugin-loading` 的 React 19 示例。
 
 ```bash
 pnpm --filter vite-plugin-loading-example-react dev

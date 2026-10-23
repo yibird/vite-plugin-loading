@@ -1,17 +1,17 @@
 <div align="center">
-  <h1>vite-plugin-loading</h1>
+  <h1>@starweave-lab/vite-plugin-loading</h1>
   <p>Inject a CSS loading screen into Vite HTML and remove it after application bootstrap</p>
   <p><a href="./README.zh-CN.md">中文</a> · <strong>English</strong></p>
 </div>
 
-# vite-plugin-loading
+# @starweave-lab/vite-plugin-loading
 
 Inject a CSS application loading screen into Vite HTML and remove it after application bootstrap.
 
 ## Install
 
 ```bash
-pnpm add -D vite-plugin-loading
+pnpm add -D @starweave-lab/vite-plugin-loading
 ```
 
 ## Configure
@@ -19,7 +19,7 @@ pnpm add -D vite-plugin-loading
 ```ts
 // vite.config.ts
 import { defineConfig } from 'vite'
-import { appLoading } from 'vite-plugin-loading'
+import { appLoading } from '@starweave-lab/vite-plugin-loading'
 
 export default defineConfig({
   plugins: [
@@ -267,7 +267,7 @@ hideAppLoading()
 Enable its TypeScript declaration in `global.d.ts`:
 
 ```ts
-/// <reference types="vite-plugin-loading/client" />
+/// <reference types="@starweave-lab/vite-plugin-loading/client" />
 ```
 
 ## Runtime API
@@ -286,21 +286,25 @@ replay the mask, clone it and undo the hide: remove `data-app-loading-hidden`, r
 `cloneLoading()` does exactly that.
 
 The package also exposes helpers for tooling and application code. Use
-`vite-plugin-loading/animation` from application code: the package root is Node-only, so
+`@starweave-lab/vite-plugin-loading/animation` from application code: the package root is Node-only, so
 importing runtime values from it inside an app would pull the plugin into the client bundle.
 
 ```ts
 // vite.config.ts and other Node tooling
-import { appLoading, loadingTypes } from 'vite-plugin-loading'
+import { appLoading, loadingTypes } from '@starweave-lab/vite-plugin-loading'
 
 // application code
-import { isLoadingType, loadingTypes, type LoadingType } from 'vite-plugin-loading/animation'
+import {
+  isLoadingType,
+  loadingTypes,
+  type LoadingType,
+} from '@starweave-lab/vite-plugin-loading/animation'
 
 loadingTypes // ['bars', 'flip', 'beat', 'dot', 'spinner', 'progress', 'ring', 'ripple']
 isLoadingType(value) // narrows unknown to LoadingType
 ```
 
-`createLoadingTemplate()` is also exported from `vite-plugin-loading/animation`. It returns the
+`createLoadingTemplate()` is also exported from `@starweave-lab/vite-plugin-loading/animation`. It returns the
 built-in markup and CSS for one type (`{ css, html }`), which is what the examples use to render
 their animation galleries without the mask wrapper.
 

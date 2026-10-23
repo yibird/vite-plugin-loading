@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vite/client", "vite-plugin-loading/client"]
+    "types": ["vite/client", "@starweave-lab/vite-plugin-loading/client"]
   },
   "include": ["src", "vite.config.ts"]
 }

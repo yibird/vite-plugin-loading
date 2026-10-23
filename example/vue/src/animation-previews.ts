@@ -2,7 +2,7 @@ import {
   createLoadingTemplate,
   loadingTypes,
   type LoadingType,
-} from 'vite-plugin-loading/animation'
+} from '@starweave-lab/vite-plugin-loading/animation'
 
 export interface AnimationPreview {
   type: LoadingType

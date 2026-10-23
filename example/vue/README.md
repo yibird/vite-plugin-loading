@@ -1,6 +1,6 @@
 # Vue 示例
 
-`vite-plugin-loading` 的 Vue 3 Composition API 示例。
+`@starweave-lab/vite-plugin-loading` 的 Vue 3 Composition API 示例。
 
 ```bash
 pnpm --filter vite-plugin-loading-example-vue dev

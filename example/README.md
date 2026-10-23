@@ -1,6 +1,6 @@
 # 示例
 
-这些示例通过当前 pnpm workspace 使用 `vite-plugin-loading`。
+这些示例通过当前 pnpm workspace 使用 `@starweave-lab/vite-plugin-loading`。
 
 ```bash
 pnpm install

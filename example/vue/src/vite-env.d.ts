@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-/// <reference types="vite-plugin-loading/client" />
+/// <reference types="@starweave-lab/vite-plugin-loading/client" />
 
 declare module '*.vue' {
   import type { DefineComponent } from 'vue'

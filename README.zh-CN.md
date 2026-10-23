@@ -1,17 +1,17 @@
 <div align="center">
-  <h1>vite-plugin-loading</h1>
+  <h1>@starweave-lab/vite-plugin-loading</h1>
   <p>一个用于注入可控应用 Loading 的 Vite 插件</p>
   <p><a href="./README.md">English</a> · <strong>中文</strong></p>
 </div>
 
-# vite-plugin-loading
+# @starweave-lab/vite-plugin-loading
 
 为 Vite 应用注入 CSS loading 页面，并在应用启动完成后淡出和移除。
 
 ## 安装
 
 ```bash
-pnpm add -D vite-plugin-loading
+pnpm add -D @starweave-lab/vite-plugin-loading
 ```
 
 ## 配置
@@ -19,7 +19,7 @@ pnpm add -D vite-plugin-loading
 ```ts
 // vite.config.ts
 import { defineConfig } from 'vite'
-import { appLoading } from 'vite-plugin-loading'
+import { appLoading } from '@starweave-lab/vite-plugin-loading'
 
 export default defineConfig({
   plugins: [
@@ -252,7 +252,7 @@ hideAppLoading()
 在 `global.d.ts` 中开启 TypeScript 类型：
 
 ```ts
-/// <reference types="vite-plugin-loading/client" />
+/// <reference types="@starweave-lab/vite-plugin-loading/client" />
 ```
 
 ## 运行时 API
@@ -269,21 +269,25 @@ hideAppLoading()
 `data-app-loading-hidden`、还原内联的 `opacity` / `pointer-events` / `will-change`、并移除
 `aria-hidden`。两个示例里的 `cloneLoading()` 就是这么做的。
 
-包内还导出了辅助内容，供工具链和应用代码使用。应用代码请从 `vite-plugin-loading/animation`
+包内还导出了辅助内容，供工具链和应用代码使用。应用代码请从 `@starweave-lab/vite-plugin-loading/animation`
 导入：包根入口是仅限 Node 的，在应用里从包根导入运行时会值会把插件打进客户端产物。
 
 ```ts
 // vite.config.ts 等 Node 工具链
-import { appLoading, loadingTypes } from 'vite-plugin-loading'
+import { appLoading, loadingTypes } from '@starweave-lab/vite-plugin-loading'
 
 // 应用代码
-import { isLoadingType, loadingTypes, type LoadingType } from 'vite-plugin-loading/animation'
+import {
+  isLoadingType,
+  loadingTypes,
+  type LoadingType,
+} from '@starweave-lab/vite-plugin-loading/animation'
 
 loadingTypes // ['bars', 'flip', 'beat', 'dot', 'spinner', 'progress', 'ring', 'ripple']
 isLoadingType(value) // 将 unknown 收窄为 LoadingType
 ```
 
-`createLoadingTemplate()` 也从 `vite-plugin-loading/animation` 导出。它返回某一类型的标记与样式
+`createLoadingTemplate()` 也从 `@starweave-lab/vite-plugin-loading/animation` 导出。它返回某一类型的标记与样式
 （`{ css, html }`），两个示例就是用它在不带遮罩外层的情况下渲染动画画廊。
 
 属性名也作为常量导出：`appLoadingAttribute`、`appLoadingHiddenAttribute`、

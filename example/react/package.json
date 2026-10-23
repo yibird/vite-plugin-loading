@@ -9,9 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@starweave-lab/vite-plugin-loading": "workspace:*",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1",
-    "vite-plugin-loading": "workspace:*"
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@types/node": "^26.6.5",

@@ -1,6 +1,6 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
-import { appLoading } from 'vite-plugin-loading'
+import { appLoading } from '@starweave-lab/vite-plugin-loading'
 
 export default defineConfig({
   plugins: [
