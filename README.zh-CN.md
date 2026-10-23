@@ -145,6 +145,9 @@ appLoading({
 | `flip`     | 无                                     | 48×48          |
 | `spinner`  | 无                                     | 50×50          |
 
+内置模板的内容块整体以 `scale: 1.25` 渲染。上表以及 60×65 的 stage 都是基础尺寸，实际渲染尺寸
+为这些数值的 1.25 倍。
+
 可以安全修改的内容：
 
 - **自定义属性**：`--{p}-theme-color`、`--{p}-mask-color`、`--{p}-auto-mask-color`、

@@ -3,20 +3,12 @@ import http from 'node:http'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { build } from 'vite'
+import { loadingTypes } from '../../src/constants.ts'
 
 export const repoRoot = path.resolve(fileURLToPath(new URL('../..', import.meta.url)))
 
-/** 浏览器里要渲染的类型，顺序与 `loadingTypes` 一致。 */
-export const fixtureTypes = [
-  'bars',
-  'flip',
-  'beat',
-  'dot',
-  'spinner',
-  'progress',
-  'ring',
-  'ripple',
-] as const
+/** 浏览器里要渲染的类型。 */
+export const fixtureTypes = loadingTypes
 
 const fixtureRoot = path.join(repoRoot, 'test/browser/.fixture')
 
@@ -113,6 +105,11 @@ export async function startServer(): Promise<FixtureServer> {
 
   return {
     origin: `http://127.0.0.1:${address.port}`,
-    close: () => new Promise<void>((resolve) => server.close(() => resolve())),
+    close: () =>
+      new Promise<void>((resolve) => {
+        // close() 不会主动断开 keep-alive 连接，需要显式关闭所有连接。
+        server.close(() => resolve())
+        server.closeAllConnections()
+      }),
   }
 }

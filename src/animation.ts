@@ -1,4 +1,4 @@
-import { appLoadingAttribute, loadingTypes } from './constants.ts'
+import { appLoadingAttribute, contentScale, loadingTypes } from './constants.ts'
 import type { LoadingType } from './types.ts'
 export {
   appLoadingAttribute,
@@ -198,7 +198,8 @@ export function createLoadingTemplate(
   const stageClass = `${classPrefix}-stage`
   const animationClass = `${classPrefix}-animation`
   const contentStyles =
-    `.${classPrefix}-content{display:grid;place-items:center;gap:24px;color:var(--${classPrefix}-theme-color)}` +
+    // 整体放大 1.25 倍：布局盒尺寸不变，视觉上等比放大，标题与间距也一起缩放。
+    `.${classPrefix}-content{display:grid;place-items:center;gap:24px;color:var(--${classPrefix}-theme-color);scale:${contentScale}}` +
     `.${stageClass}{width:60px;height:65px;display:grid;place-items:center;overflow:visible}` +
     `[${appLoadingAttribute}=beat] .${stageClass}{place-items:start center}` +
     `.${animationClass}{display:block}` +

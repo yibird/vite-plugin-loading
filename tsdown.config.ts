@@ -8,9 +8,10 @@ export default defineConfig({
   dts: true,
   clean: true,
   // 这个包只会作为构建期依赖跑在 Node 里，压缩没有收益，反而让报错的堆栈难以阅读。
-  // 输出可读代码 + sourcemap。
+  // 输出可读代码；sourcemap 只在本地生成、不写 sourceMappingURL，发布包又会排除 map 文件，
+  // 因此消费方不会看到指向不存在文件的引用。
   minify: false,
-  sourcemap: true,
+  sourcemap: 'hidden',
   outDir: 'dist',
   deps: {
     neverBundle: ['vite', /^node:/],

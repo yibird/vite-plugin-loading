@@ -150,6 +150,9 @@ nodes:
 | `flip`     | none                                                         | 48×48                |
 | `spinner`  | none                                                         | 50×50                |
 
+Built-in templates render inside a content block scaled to `1.25` (`scale: 1.25`). The sizes above
+and the 60×65 stage are base values; rendered dimensions are 1.25× those numbers.
+
 What is safe to change:
 
 - **Custom properties**: `--{p}-theme-color`, `--{p}-mask-color`, `--{p}-auto-mask-color`,

@@ -1,5 +1,6 @@
 import { execFileSync } from 'node:child_process'
 import { expect, test, type Page } from '@playwright/test'
+import { contentScale } from '../../src/constants.ts'
 import { buildFixture, fixtureTypes, repoRoot, startServer, type FixtureServer } from './serve'
 
 let server: FixtureServer
@@ -77,7 +78,7 @@ test('progress 每一步的推进量正好等于一个 mask tile', async ({ page
   const bar = page.locator('[data-app-loading=progress] .v-loader-animation')
   const fill = bar.locator('> i:first-child')
 
-  // tile 宽度从渲染后的 mask-size 算出，而不是写死 24 —— 这样断言的是"步进 == tile"这个自洽关系。
+  // tile 宽度从渲染后的 mask-size 算出，再与基础 24px × scale 对齐。
   // 注意 Chrome 的 computed `mask-size` 保留百分比原样（这里是 `20% 100%`），要自己按条宽换算。
   const tile = await bar.evaluate((element) => {
     const style = getComputedStyle(element)
@@ -87,7 +88,7 @@ test('progress 每一步的推进量正好等于一个 mask tile', async ({ page
     if (!Number.isFinite(parsed)) throw new Error(`读不到 mask tile 宽度："${size}"`)
     return token.endsWith('%') ? (parsed / 100) * element.getBoundingClientRect().width : parsed
   })
-  expect(tile).toBe(24)
+  expect(tile).toBeCloseTo(24 * contentScale)
 
   // 每一步取中点：steps(6) 会把输出量化，中点才落在平台期上，边界会落到下一个平台。
   const widths: number[] = []
@@ -96,13 +97,12 @@ test('progress 每一步的推进量正好等于一个 mask tile', async ({ page
     widths.push(Math.round((await fill.boundingBox())!.width))
   }
 
-  // scaleX(1.2) 是刻意的：6 步正好覆盖满 120px（0/24/48/72/96/120）。改成 1.0 的话最后一步只到
-  // 100px，条永远填不满。而 1.2 这个端点值本身看不到 —— 到达它的瞬间迭代就回绕了。
-  expect(widths).toEqual([0, 24, 48, 72, 96, 120])
-  for (const width of widths) expect(width % tile).toBe(0)
+  // scaleX(1.2) 是刻意的：6 步正好覆盖满整条 bar。改成 1.0 的话最后一步只到 100px，条永远
+  // 填不满。而 1.2 这个端点值本身看不到 —— 到达它的瞬间迭代就回绕了。
+  expect(widths).toEqual([0, 1, 2, 3, 4, 5].map((step) => Math.round(step * tile)))
   // 关键不变式：每一步推进的正好是一个 tile，所以填充只会停在色块边界上，绝不切进色块中间。
   for (let index = 1; index < widths.length; index += 1) {
-    expect(widths[index]! - widths[index - 1]!).toBe(tile)
+    expect(widths[index]! - widths[index - 1]!).toBe(Math.round(tile))
   }
 })
 
@@ -234,16 +234,20 @@ test('bars 是 5 根 6px 的条，间隙 5px，静止高度为 34px 的 46%', as
       }),
     )
 
+  const barWidth = 6 * contentScale
+  const barHeight = 34 * 0.46 * contentScale
+  const barGap = 5 * contentScale
+
   expect(boxes).toHaveLength(5)
   for (const box of boxes) {
-    expect(box.width).toBeCloseTo(6, 1)
+    expect(box.width).toBeCloseTo(barWidth, 1)
     // scaleY(.46) 会被 getBoundingClientRect 反映出来，所以量到的是静止姿态的实际高度。
-    expect(box.height).toBeCloseTo(34 * 0.46, 1)
+    expect(box.height).toBeCloseTo(barHeight, 1)
   }
   for (let index = 1; index < boxes.length; index += 1) {
     const previous = boxes[index - 1]!
     const current = boxes[index]!
-    expect(current.x - (previous.x + previous.width)).toBeCloseTo(5, 1)
+    expect(current.x - (previous.x + previous.width)).toBeCloseTo(barGap, 1)
   }
 })
 
